@@ -14,8 +14,8 @@ type SequenceService struct {
 	_snowflake snowflake.Snowflake
 }
 
-func newSequenceService() *SequenceService {
-	_snowflake := snowflake.NewSnowflake(0)
+func newSequenceService(nodeId int) *SequenceService {
+	_snowflake := snowflake.NewSnowflake(int64(nodeId))
 	return &SequenceService{_snowflake: _snowflake}
 }
 
