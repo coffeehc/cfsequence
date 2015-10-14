@@ -25,11 +25,11 @@ func main() {
 	if !flag.Parsed() {
 		flag.Parse()
 	}
+	logger.InitLogger()
 	if *nodeId < 0 || *nodeId > 255 {
 		fmt.Errorf("节点为0-255之间的值,请重新设置")
 		return
 	}
-	logger.SetDefaultLevel("/", logger.LOGGER_LEVEL_INFO)
 	_service := newService()
 	args := make([]string, 3)
 	args[0] = fmt.Sprintf("-nodeid=%d", *nodeId)
