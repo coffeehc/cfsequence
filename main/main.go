@@ -15,8 +15,8 @@ type service struct {
 }
 
 var (
-	nodeId = flag.Int("nodeid", 0, "节点编号,最大255")
-	http_ip = flag.String("http_ip", "0.0.0.0", "服务器地址")
+	nodeId    = flag.Int("nodeid", 0, "节点编号,最大255")
+	http_ip   = flag.String("http_ip", "0.0.0.0", "服务器地址")
 	http_port = flag.Int("http_port", 8888, "服务提供地址")
 )
 
