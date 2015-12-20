@@ -13,18 +13,16 @@ import (
 var (
 	nodeId = flag.Int("nodeid", 0, "节点编号,最大255")
 	http_ip = flag.String("http_ip", "0.0.0.0", "服务器地址")
-	http_port = flag.Int("http_port", 8888, "服务提供地址")
+	http_port = flag.Int("http_port", 8889, "服务提供地址")
 )
 
 func main() {
-	if !flag.Parsed() {
-		flag.Parse()
-	}
 	logger.InitLogger()
 	if *nodeId < 0 || *nodeId > 255 {
 		fmt.Errorf("节点为0-255之间的值,请重新设置")
 		return
 	}
+	utils.InstallService("sequenceService","")
 	var webServer *web.Server
 	var sequenceService *SequenceService
 	service := utils.NewService(func() error{

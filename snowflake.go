@@ -17,7 +17,7 @@ type _snowflake struct {
 	lock *sync.Mutex
 }
 
-func NewSnowflake(nodeId int64) Snowflake {
+func NewSequenceService(nodeId int64) SequenceService {
 	if nodeId > maxNodeId {
 		return nil
 	}

@@ -11,17 +11,17 @@ import (
 )
 
 type SequenceService struct {
-	_snowflake cfsequence.Snowflake
+	_snowflake cfsequence.SequenceService
 }
 
 func newSequenceService(nodeId int) *SequenceService {
-	_snowflake := cfsequence.NewSnowflake(int64(nodeId))
+	_snowflake := cfsequence.NewSequenceService(int64(nodeId))
 	return &SequenceService{_snowflake: _snowflake}
 }
 
 func (this *SequenceService) regeditRestService(server *web.Server) {
-	server.Regedit("/v1.0/sequences", web.POST, this.GetNextId)
-	server.Regedit("/v1.0/sequences/{id}", web.GET, this.ParseId)
+	server.Regedit("/v1/sequences", web.POST, this.GetNextId)
+	server.Regedit("/v1/sequences/{id}", web.GET, this.ParseId)
 }
 
 type Sequence_Response struct {

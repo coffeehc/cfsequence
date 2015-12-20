@@ -23,7 +23,7 @@ const (
 )
 
 //Snowflake接口定义
-type Snowflake interface {
+type SequenceService interface {
 	//元年时间,使用默认配置epoch
 	GetEpoch() int64
 	//获取节点Id
