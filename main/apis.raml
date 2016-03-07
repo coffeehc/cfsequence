@@ -1,0 +1,75 @@
+#%RAML 0.8
+title: Sequence API
+version: v1
+protocols: [HTTP]
+baseUri: http://api.xiagaogao.com/{version}
+mediaType: application/json
+
+/sequences:
+  post:
+    description: cteate a new sequence
+    responses:
+      200:
+        body:
+          application/json:
+            schema: |
+              {
+                "$schema": "http://json-schema.org/draft-03/schema",
+                "properties": {
+                  "sequences": "number"
+                  },
+                "required": true,
+                "type": "object"
+              }
+
+  /{sequence}:
+    description: parse info of sequence
+    get:
+      description:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-03/schema",
+                  "properties": {
+                    "sequence": "number",
+                    "createTime": "string",
+                    "nodeId": "number",
+                    "index": "number"
+                    },
+                  "required": true,
+                  "type": "object"
+                }
+
+        422:
+          body:
+            application/json:
+               schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-03/schema",
+                  "properties": {
+                  "code": "number",
+                  "debug_id?": "number",
+                  "message": "string",
+                  "information_link": "string"
+                  },
+                  "required": true,
+                  "type": "object"
+                }
+        500:
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-03/schema",
+                  "properties": {
+                  "code": "number",
+                  "debug_id?": "number",
+                  "message": "string",
+                  "information_link": "string"
+                  },
+                  "required": true,
+                  "type": "object"
+                }

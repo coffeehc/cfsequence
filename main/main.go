@@ -4,38 +4,27 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/coffeehc/logger"
+
+	"github.com/coffeehc/microserviceboot"
+	"github.com/coffeehc/microserviceboot/consultool"
 	"github.com/coffeehc/web"
-	"github.com/coffeehc/utils"
 )
 
-
 var (
-	nodeId = flag.Int("nodeid", 0, "节点编号,最大255")
-	http_ip = flag.String("http_ip", "0.0.0.0", "服务器地址")
-	http_port = flag.Int("http_port", 8889, "服务提供地址")
+	nodeId    = flag.Int("nodeid", 0, "节点编号,最大255")
+	http_Addr = flag.String("http_ip", "", "服务器地址")
 )
 
 func main() {
-	logger.InitLogger()
-	if *nodeId < 0 || *nodeId > 255 {
-		fmt.Errorf("节点为0-255之间的值,请重新设置")
-		return
+	config := new(microserviceboot.MicorServiceCofig)
+	webConfig := new(web.ServerConfig)
+	webConfig.ServerAddr = *http_Addr
+	webConfig.DefaultTransport = web.Transport_Json
+	config.Service = newSequenceService(0)
+	config.DevModule = true
+	serviceRegister, err := consultool.NewConsulServiceRegister(nil)
+	if err != nil {
+		fmt.Printf("创建服务注册器失败:%s", err)
 	}
-	utils.InstallService("sequenceService","")
-	var webServer *web.Server
-	var sequenceService *SequenceService
-	service := utils.NewService(func() error{
-		webServer = web.NewServer(&web.ServerConfig{Addr: *http_ip, Port: *http_port})
-		sequenceService = newSequenceService(*nodeId)
-		sequenceService.regeditRestService(webServer)
-		return webServer.Start()
-	}  , func()error{
-		logger.Debug("webServer is %#v",webServer)
-		webServer.Stop()
-		return nil
-	})
-	utils.StartService(service)
+	microserviceboot.ServiceLauncher(config, serviceRegister)
 }
-
-
