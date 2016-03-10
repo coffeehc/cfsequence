@@ -5,17 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
-	"io/ioutil"
-
 	"github.com/coffeehc/cfsequence"
-	"github.com/coffeehc/logger"
+	internal "github.com/coffeehc/cfsequence/common"
 	"github.com/coffeehc/microserviceboot/common"
 	"github.com/coffeehc/web"
 )
 
 type SequenceService struct {
 	_snowflake cfsequence.SequenceService
-	apiDefine  string
 }
 
 func newSequenceService(nodeId int) *SequenceService {
@@ -46,41 +43,11 @@ func (this *SequenceService) GetEndPoints() []common.EndPoint {
 }
 
 func (this *SequenceService) GetServiceInfo() common.ServiceInfo {
-	return this
-}
-
-func (this *SequenceService) GetApiDefine() string {
-	if this.apiDefine == "" {
-		data, err := ioutil.ReadFile("apis.raml")
-		if err == nil {
-			this.apiDefine = string(data)
-		} else {
-			logger.Error("read file error :%s", err)
-			this.apiDefine = "no define"
-		}
-	}
-	return this.apiDefine
-}
-func (this *SequenceService) GetServiceName() string {
-	return "sequences"
-}
-func (this *SequenceService) GetVersion() string {
-	return "v1"
-}
-func (this *SequenceService) GetDescriptor() string {
-	return "a sequence service"
-}
-
-func (this *SequenceService) GetServiceTags() []string {
-	return []string{"dev"}
-}
-
-type Sequence_Response struct {
-	Sequence int64 `json:"sequence"`
+	return &internal.SequenceServiceInfo{}
 }
 
 func (this *SequenceService) GetNextId(request *http.Request, pathFragments map[string]string, reply web.Reply) {
-	reply.With(Sequence_Response{this._snowflake.NextId()})
+	reply.With(internal.Sequence_Response{this._snowflake.NextId()})
 }
 
 func (this *SequenceService) ParseId(request *http.Request, pathFragments map[string]string, reply web.Reply) {

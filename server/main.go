@@ -5,8 +5,8 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/coffeehc/microserviceboot"
 	"github.com/coffeehc/microserviceboot/consultool"
+	"github.com/coffeehc/microserviceboot/server"
 	"github.com/coffeehc/web"
 )
 
@@ -16,7 +16,7 @@ var (
 )
 
 func main() {
-	config := new(microserviceboot.MicorServiceCofig)
+	config := new(server.MicorServiceCofig)
 	webConfig := new(web.ServerConfig)
 	webConfig.ServerAddr = *http_Addr
 	webConfig.DefaultTransport = web.Transport_Json
@@ -26,5 +26,5 @@ func main() {
 	if err != nil {
 		fmt.Printf("创建服务注册器失败:%s", err)
 	}
-	microserviceboot.ServiceLauncher(config, serviceRegister)
+	server.ServiceLauncher(config, serviceRegister)
 }

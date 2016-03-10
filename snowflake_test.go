@@ -37,7 +37,7 @@ func (this *SequenceSuite) TestGetNodeId(c *check.C) {
 
 func (this *SequenceSuite) TestNextId(c *check.C) {
 	waitGroup := new(sync.WaitGroup)
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 1; i++ {
 		waitGroup.Add(1)
 		go func(group *sync.WaitGroup) {
 			defer group.Done()
