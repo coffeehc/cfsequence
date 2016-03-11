@@ -3,11 +3,14 @@ package client
 import (
 	"fmt"
 
+	"flag"
+
 	"github.com/coffeehc/cfsequence"
 	"github.com/coffeehc/cfsequence/common"
 	"github.com/coffeehc/logger"
 	"github.com/coffeehc/microserviceboot/client"
 	"github.com/coffeehc/resty"
+	"github.com/syndtr/goleveldb/leveldb/errors"
 )
 
 type SequenceApi struct {
@@ -15,13 +18,21 @@ type SequenceApi struct {
 	config *client.ServiceClientConfig
 }
 
+var (
+	domain     = flag.String("domain", "", "根域")
+	datacenter = flag.String("datacenter", "dc", "数据中心")
+	dns        = flag.String("dns", "127.0.0.1:8600", "dns 地址")
+)
+
 func NewSequenceApi() (*SequenceApi, error) {
+	if *domain == "" {
+		return nil, errors.New("没有定义根域")
+	}
 	config := &client.ServiceClientConfig{
-		DevModule:  false,
-		Domean:     "test",
-		DataCenter: "dc",
+		Domain:     *domain,
+		DataCenter: *datacenter,
 		Info:       &common.SequenceServiceInfo{},
-		DNSAddress: "127.0.0.1:8600",
+		DNSAddress: *dns,
 	}
 	serviceClient, err := client.NewServiceClient(config, nil)
 	if err != nil {

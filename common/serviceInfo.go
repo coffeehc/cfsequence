@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 
 	"github.com/coffeehc/logger"
-	"github.com/coffeehc/microserviceboot/common"
 )
 
 type SequenceServiceInfo struct {
@@ -25,7 +24,7 @@ func (this *SequenceServiceInfo) GetApiDefine() string {
 }
 
 func (this SequenceServiceInfo) GetServiceName() string {
-	return "sequences"
+	return "sequence"
 }
 func (this SequenceServiceInfo) GetVersion() string {
 	return "v1"
@@ -35,17 +34,5 @@ func (this SequenceServiceInfo) GetDescriptor() string {
 }
 
 func (this SequenceServiceInfo) GetServiceTags() []string {
-	return []string{"dev"}
-}
-
-func (this SequenceServiceInfo) GetServerPort() int {
-	return 8080
-}
-
-func (this SequenceServiceInfo) GetScheme() common.RpcScheme {
-	return common.RpcScheme_Http
-}
-
-func (this SequenceServiceInfo) GetTLSCert() (cartFile, keyFiler string) {
-	return "server.crt", "server.key"
+	return nil
 }

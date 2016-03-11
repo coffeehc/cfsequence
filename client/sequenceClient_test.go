@@ -3,10 +3,13 @@ package client_test
 import (
 	"testing"
 
+	"flag"
+
 	"github.com/coffeehc/cfsequence/client"
 )
 
 func BenchmarkClientAPI(b *testing.B) {
+	flag.Set("domain", "test")
 	sequenceApi, err := client.NewSequenceApi()
 	if err != nil {
 		b.Logf("创建 Api失败:%s", err)
