@@ -31,7 +31,7 @@ type SequenceService interface {
 	//获取下一个Id
 	NextId() int64
 	//解析sequence
-	ParseSequence(sequence int64) Sequence
+	ParseSequence(sequence int64) *Sequence
 }
 
 type Sequence struct {
