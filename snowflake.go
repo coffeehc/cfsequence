@@ -31,6 +31,10 @@ func (this *_snowflake) GetNodeId() int64 {
 	return this.nodeId
 }
 
+func (this *_snowflake)MinId(timestemp int64) int64{
+	return (timestemp-epoch)<<timestampLeftShift | 0<<indexShift
+}
+
 
 func (this *_snowflake)getTimeStampAndIndex()(int64,int64){
 	this.mutex.Lock()

@@ -32,6 +32,8 @@ type SequenceService interface {
 	NextId() int64
 	//解析sequence
 	ParseSequence(sequence int64) *Sequence
+	//给出指定时间戳内最小的 SequenceId, 时间戳单位毫秒
+	MinId(timestemp int64) int64
 }
 
 type Sequence struct {
